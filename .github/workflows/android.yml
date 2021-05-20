@@ -10,5 +10,6 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
-    - name: Grant execute permission for gradlew
+    steps:
+    - name: Hello
       run: echo "HI All"
