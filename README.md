@@ -87,7 +87,7 @@ Additional documentation
 
 ### Git
 
-To build the app from git, i.e. tag, branch or commit, use the following after 
+To build the app from git, i.e. tag, branh or commit, use the following after 
 modifying the file if necessary. Use this if you want to build a test or 
 development release.
 
