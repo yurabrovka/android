@@ -1,7 +1,9 @@
 name: Android CI
 
-on: workflow_dispatch
-${{ github.repository}}
+on: 
+  workflow_dispatch:
+    inputs:
+      msg: ${{ github.repository}}
 
 jobs:
   build:
