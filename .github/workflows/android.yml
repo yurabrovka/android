@@ -1,11 +1,11 @@
 name: Android CI
-on:
-  workflow_dispatch:
-    inputs:
-      msg:
-        default: ${{ github.repository}}
+on: workflow_dispatch
 
 jobs:
+  repo_name:
+    steps:
+    - name: Repo
+      run: echo ${github.ref}
   build:
 
     runs-on: ubuntu-latest
