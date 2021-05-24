@@ -9,4 +9,4 @@ jobs:
     - name: Hello
       run: echo "HI All"
     - name: Repo
-      run: echo ${github.ref}
+      run: echo $GITHUB_REPOSITORY
