@@ -17,3 +17,25 @@ jobs:
 
       - name: Show repository name
         run: echo $GITHUB_REPOSITORY
+  
+      - name: Label Fixed Issues
+        uses: gh-bot/fix-labeler@master
+        with:
+    # By default the action is using Personal access token (PAT) used to fetch
+    # the repository.
+    #
+    # Default: ${{ github.token }}
+          token: ''
+
+    # Name of the label to apply to fixed issues. When parameter is
+    # not present, issues will be annotated with a label named as current branch,
+    # "master" or "develop" for example. If requested label is not found in the
+    # repository, nothing is annotated
+    #
+    # Default: Current branch name
+          label: ''
+
+    # Relative path under $GITHUB_WORKSPACE to place the repository
+    #
+    # Default: current directory
+          path: ''
