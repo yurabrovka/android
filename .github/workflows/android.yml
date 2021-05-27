@@ -22,7 +22,7 @@ jobs:
       
           
       - name: Show repository name
-        uses: ryolambert/current-branch@v1.0
+        run: echo $GITHUB_REPOSITORY
   
       - name: Label Fixed Issues
         uses: gh-bot/fix-labeler@master
