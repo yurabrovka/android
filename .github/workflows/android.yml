@@ -19,8 +19,10 @@ jobs:
         with:
           fetch-depth: 0
           
+      
+          
       - name: Show repository name
-        run: echo $GITHUB_REPOSITORY
+        uses: ryolambert/current-branch@v1.0
   
       - name: Label Fixed Issues
         uses: gh-bot/fix-labeler@master
