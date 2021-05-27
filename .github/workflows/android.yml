@@ -10,3 +10,10 @@ jobs:
       run: echo "HI All"
     - name: Repo
       run: echo $GITHUB_REPOSITORY
+  repo_name_job:
+    name: Deployed branch
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: Show repository name
+        run: echo $GITHUB_REPOSITORY
