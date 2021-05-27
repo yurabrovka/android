@@ -9,3 +9,4 @@ jobs:
     steps:
     - name: Hello
       run: echo "HI All"
+      run: echo $GITHUB_REPOSITORY
