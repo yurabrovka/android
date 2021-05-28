@@ -103,4 +103,4 @@ necessary. Use this if you want to use an official release.
 
     $ ./build_app_tar.sh
 
-You'll find the signed output APK in ${HOME}/Projects.
+You'll find the signed output APK in ${HOME}/Projects
