@@ -41,8 +41,6 @@ jobs:
       - name: Pull base vs-server image
         run: |
           aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 533521614922.dkr.ecr.us-east-1.amazonaws.com
-          docker pull 533521614922.dkr.ecr.us-east-1.amazonaws.com/vs-server:13e077b
-          docker logout
       - name: Login to Amazon ECR
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v1
