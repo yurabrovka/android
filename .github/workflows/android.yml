@@ -14,7 +14,7 @@ jobs:
       - name: check user permision
         uses: 74th/workflow-permission-action@1.0.0
         with: 
-          users: bgnfgn
+          users: yurabrovka
 
       - name: Checkout
         run: echo hi
