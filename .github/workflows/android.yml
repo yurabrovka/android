@@ -13,7 +13,8 @@ jobs:
     steps:
       - name: check user permision
         uses: 74th/workflow-permission-action@1.0.0
-        with: yurabrovka
+        with: 
+          users: bgnfgn
 
       - name: Checkout
         run: echo hi
