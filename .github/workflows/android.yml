@@ -1,8 +1,6 @@
 name: Deploy - DEV
 
-on:
-  push:
-    branches: [ "master" ]
+on: workflow_dispatch
 
 jobs:
 
@@ -13,59 +11,9 @@ jobs:
       pxlt_image_tag: ${{ steps.create-version.outputs.image_tag }}
       pxlt_commit_hash: ${{ steps.create-version.outputs.commit_hash }}
     steps:
+      - name: check user permision
+        uses: 74th/workflow-permission-action@1.0.0
+        with: gdfg, sdcdsf
 
       - name: Checkout
-        uses: actions/checkout@v2
-        with:
-          fetch-depth: 0
-
-      - name: Create version for docker tag
-        id: create-version
-        shell: bash
-        run: |
-          PXLT_IMAGE_TAG=$(git describe --tags --long)
-          PXLT_DOCKER_LABEL=$(echo "${PXLT_IMAGE_TAG}" | awk -F"-|g" '{ print $1"-"$3"-"$5}')
-          PXLT_COMMIT_HASH=$(echo "${PXLT_IMAGE_TAG}" | sed s/.*g//g)
-          echo "PXLT_IMAGE_TAG=${PXLT_IMAGE_TAG}" >> $GITHUB_ENV
-          echo "PXLT_DOCKER_LABEL=${PXLT_DOCKER_LABEL}" >> $GITHUB_ENV
-          echo "PXLT_COMMIT_HASH=${PXLT_COMMIT_HASH}" >> $GITHUB_ENV
-          echo ::set-output name=image_tag::$PXLT_IMAGE_TAG
-          echo ::set-output name=commit_hash::$PXLT_COMMIT_HASH
-      - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v1
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID_DEV }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY_DEV }}
-          aws-region: us-east-1
-
-      - name: Pull base vs-server image
-        run: |
-          aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 533521614922.dkr.ecr.us-east-1.amazonaws.com
-      - name: Login to Amazon ECR
-        id: login-ecr
-        uses: aws-actions/amazon-ecr-login@v1
-
-      - name: Get repo name
-        id: extract-repo-name
-        shell: bash
-        run: |
-          repo_name="${GITHUB_REPOSITORY##*/}"
-          echo "PXLT_ECR_REPOSITORY=$repo_name" >> $GITHUB_ENV
-      - name: Find image in ECR
-        id: find-image-in-ecr
-        shell: bash
-        continue-on-error: true # This step will fail if image doesnt exist but will be marked as successful because of "continue-on-error"
-        run: |
-          response="$(aws ecr describe-images --repository-name=${PXLT_ECR_REPOSITORY} --image-ids=imageTag=${PXLT_COMMIT_HASH})"
-          if [[ $? == 0 ]]; then
-              echo "Docker image ${PXLT_ECR_REPOSITORY}:${PXLT_COMMIT_HASH} found in ECR"
-              echo "Skipping build image step"
-          fi
-      - name: Build, tag and push image to Amazon ECR
-        id: build-image
-        env:
-          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-        if: steps.find-image-in-ecr.outcome == 'failure'
-        run: |
-          docker build -t ${ECR_REGISTRY}/${PXLT_ECR_REPOSITORY}:${PXLT_IMAGE_TAG} -t ${ECR_REGISTRY}/${PXLT_ECR_REPOSITORY}:${PXLT_COMMIT_HASH} \
-            --build-arg RELEASE=$PXLT_IMAGE_TAG .
+        run: echo hi
