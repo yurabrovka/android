@@ -11,10 +11,6 @@ jobs:
       pxlt_image_tag: ${{ steps.create-version.outputs.image_tag }}
       pxlt_commit_hash: ${{ steps.create-version.outputs.commit_hash }}
     steps:
-      - name: check user permision
-        uses: 74th/workflow-permission-action@1.0.0
-        with: 
-          users: yurabrovka
 
       - name: Checkout
         run: ${GITHUB_REF#refs/heads/}
