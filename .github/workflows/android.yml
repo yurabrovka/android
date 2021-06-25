@@ -13,4 +13,4 @@ jobs:
     steps:
 
       - name: Checkout
-        run: ${GITHUB_REF#refs/heads/}
+        run: ${GITHUB_REF}
