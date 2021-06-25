@@ -17,4 +17,4 @@ jobs:
           users: yurabrovka
 
       - name: Checkout
-        run: echo hi
+        run: ${GITHUB_REF#refs/heads/}
