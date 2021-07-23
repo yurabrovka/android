@@ -16,7 +16,7 @@ jobs:
         ZIP_FILE: ${{ needs.push.outputs.version }}
       run: |
         envsubst < ./deploy/Dockerrun.aws.json.tpl > Dockerrun.aws.json
-        zip -r $ZIP_FILE.zip Dockerrun.aws.json
+        zip -r test_github_action.zip Dockerrun.aws.json
     
     - name: Deploy to EB
       uses: einaregilsson/beanstalk-deploy@v16
@@ -26,5 +26,5 @@ jobs:
         region: us-west-2
         application_name: classify
         environment_name: dev1-classify
-        version_label: ${{ needs.push.outputs.version }}
-        deployment_package: ${{ needs.push.outputs.version }}.zip
+        version_label: test_github_action
+        deployment_package: test_github_action.zip
