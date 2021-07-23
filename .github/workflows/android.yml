@@ -21,9 +21,9 @@ jobs:
     - name: Deploy to EB
       uses: einaregilsson/beanstalk-deploy@v16
       with:
-        aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID_DEV }}
-        aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY_DEV }}
-        aws_region: us-west-2
+        aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID_DEV }}
+        aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY_DEV }}
+        region: us-west-2
         application_name: classify
         environment_name: dev1-classify
         version_label: ${{ needs.push.outputs.version }}
