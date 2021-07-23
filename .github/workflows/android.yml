@@ -6,7 +6,6 @@ jobs:
 
   deploy:
     name: Deploy to Elasticbeanstalk
-    needs: push
     runs-on: ubuntu-latest
     steps:
        
