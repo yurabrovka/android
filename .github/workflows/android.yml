@@ -4,13 +4,28 @@ on: workflow_dispatch
 
 jobs:
 
-  push_image_job:
-    name: Upload to ECR
+  deploy:
+    name: Deploy to Elasticbeanstalk
+    needs: push
     runs-on: ubuntu-latest
-    outputs:
-      pxlt_image_tag: ${{ steps.create-version.outputs.image_tag }}
-      pxlt_commit_hash: ${{ steps.create-version.outputs.commit_hash }}
     steps:
+       
 
-      - name: Checkout
-        run: echo ${GITHUB_REF#refs/heads/}
+    - name: Generate Deploy File
+      env:
+        VERSION: ${{ needs.push.outputs.version }}
+        ZIP_FILE: ${{ needs.push.outputs.version }}
+      run: |
+        envsubst < ./deploy/Dockerrun.aws.json.tpl > Dockerrun.aws.json
+        zip -r $ZIP_FILE.zip Dockerrun.aws.json
+    
+    - name: Deploy to EB
+      uses: einaregilsson/beanstalk-deploy@v16
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID_DEV }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY_DEV }}
+        aws-region: us-west-2
+        application_name: classify
+        environment_name: dev1-classify
+        version_label: ${{ needs.push.outputs.version }}
+        deployment_package: ${{ needs.push.outputs.version }}.zip
